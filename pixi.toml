@@ -1,0 +1,16 @@
+[project]
+authors = ["tobias fenner <toby@makerain.com>"]
+channels = ["conda-forge"]
+description = "plot a skew-t log-p from a drone sounding ulog file"
+name = "ulog2skewt"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+pyulog = "*"
+pandas = "*"
+numpy = "*"
+matplotlib = "*"
+metpy = ">=1.6.3,<2"
