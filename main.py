@@ -94,8 +94,10 @@ def plot_skewt(df):
         pressure = df['pressure'].values * units.Pa
         temperature = df['therm_temp_celcius'].values * units.degC
         dewpoint = df['dewpoint'].values * units.degC
-        u_wind = df['windspeed_north'].values * units.meter_per_second
-        v_wind = df['windspeed_east'].values * units.meter_per_second
+        
+        # Convert winds from m/s to knots for barbs
+        u_wind = (df['windspeed_north'].values * 1.94384) * units.knots  # m/s to knots
+        v_wind = (df['windspeed_east'].values * 1.94384) * units.knots   # m/s to knots
         wind_speed = df['wind_magnitude'].values * units.meter_per_second
 
         fig = plt.figure(figsize=(9, 9))
@@ -109,9 +111,9 @@ def plot_skewt(df):
         skew.plot(pressure, temperature,'r', lw=2, label='TEMPERATURE')
         skew.plot(pressure, dewpoint,'g', lw=2, label='DEWPOINT')
         
-        # Sample every nth point to get 10 total barbs
-        n = len(pressure) // 10
-        if n < 1: n = 1  # Handle case with less than 10 points
+        # Sample every nth point to get fewer barbs
+        n = len(pressure) // 8
+        if n < 1: n = 1  # Handle case with not enough samples
         
         skew.plot_barbs(pressure[::n], u_wind[::n], v_wind[::n])
 
